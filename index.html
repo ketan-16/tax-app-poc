@@ -7,8 +7,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Simple Calculator</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="icons/favicon.png">
+    <script src="dist/index.global.js"></script>
 </head>
 
 <body>
@@ -108,8 +109,8 @@
                 [5000000, 100000000000, 0.35],
             ];
             let totalTax = 0;
-            for (let i = 0; i < brackets.length; i++) {
-                let [lower, upper, rate] = brackets[i];
+            for (const element of brackets) {
+                let [lower, upper, rate] = element;
                 if (taxableIncome <= lower) {
                     break;
                 }
