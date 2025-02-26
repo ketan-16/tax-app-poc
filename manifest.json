@@ -2,6 +2,7 @@
     "name": "Simple Tax Calculator",
     "short_name": "Tax Calculator",
     "description": "A simple Tax Calculator for a POC",
+    "id": "/index.html",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
@@ -15,7 +16,16 @@
         {
             "src": "/icons/icon-512x512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "attribute": "any"
+        }
+    ],
+    "screenshots": [
+        {
+         "src": "screenshots/screenshot-1.png",
+          "sizes": "1082x2402",
+          "type": "image/png",
+          "label": "Tax Calculator"
         }
     ]
 }
