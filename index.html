@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Calculator</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+        <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
+            aria-hidden="true">
+            <div class="relative left-1/2 -z-10 aspect-1155/678 w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
+                style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+            </div>
+        </div>
+        <div class="mx-auto max-w-2xl text-center">
+            <h2 class="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
+                Calculatrice simple
+            </h2>
+            <p class="mt-2 text-lg/8 text-gray-600">Outil simple pour le calcul des taxes</p>
+        </div>
+        <form action="#" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20">
+            <div class="grid grid-cols-1 gap-x-8 gap-y-6">
+                <div>
+
+                    <label for="price" class="block text-sm/6 font-medium text-gray-900">
+                        Montant viré en Thaïlande (en Bahts) dans l'année
+                    </label>
+                    <div class="mt-2">
+                        <div
+                            class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                            <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                ฿
+                            </div>
+                            <input type="text" name="price" id="price"
+                                class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                placeholder="0.00" />
+                            <div class="grid shrink-0 grid-cols-1 focus-within:relative">
+                                <select id="currency" name="currency" aria-label="Currency"
+                                    class="col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pr-7 pl-3 text-base text-gray-500 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                                    <option>BHT</option>
+                                </select>
+                                <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+                                    viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd"
+                                        d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Senior-Citizen Switch -->
+                    <div class="pt-8">
+                        <label class="inline-flex justify-between w-full items-center cursor-pointer">
+                            <span class="text-sm/6 font-medium text-gray-900">
+                                J'ai 65 ans ou plus:
+                            </span>
+                            <input type="checkbox" class="sr-only peer" />
+                            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700
+                       peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full
+                       peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px]
+                       after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full
+                       after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculate Button -->
+            <br />
+            <div class="pt-8"></div>
+            <button type="button" class="text-white w-full bg-blue-700 hover:bg-blue-800 font-medium rounded-lg
+               text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none">
+                Calculate Tax
+            </button>
+        </form>
+
+        <!-- Result Paragraph (initially invisible) -->
+        <p class="invisible flex mx-auto mt-8 max-w-xl sm:mt-20 justify-center">
+            <span class="text-sm/6 font-medium text-gray-900">
+                Votre impôt thaï sera de: ฿
+                <span class="text-xl">0.00</span>
+            </span>
+        </p>
+    </div>
+
+    <script>
+        function calculateTax(income, isSeniorCitizen) {
+            let baseReductionAmount = (income * 0.5) > 100000 ? 100000 : (income * 0.5);
+            let ssAmount = isSeniorCitizen ? 190000 : 0;
+            let personalAmount = 60000;
+            let taxableIncome = income - baseReductionAmount - ssAmount - personalAmount;
+            const brackets = [
+                [0, 150000, 0.00],
+                [150000, 300000, 0.05],
+                [300000, 500000, 0.10],
+                [500000, 750000, 0.15],
+                [750000, 1000000, 0.20],
+                [1000000, 2000000, 0.25],
+                [2000000, 5000000, 0.30],
+                [5000000, 100000000000, 0.35],
+            ];
+            let totalTax = 0;
+            for (let i = 0; i < brackets.length; i++) {
+                let [lower, upper, rate] = brackets[i];
+                if (taxableIncome <= lower) {
+                    break;
+                }
+                let amountInBracket = Math.min(taxableIncome, upper) - lower;
+                totalTax += amountInBracket * rate;
+                if (taxableIncome <= upper) {
+                    break;
+                }
+            }
+            return totalTax;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const priceInput = document.getElementById('price');
+            const seniorCheckbox = document.querySelector("input[type='checkbox']");
+            const calculateButton = document.querySelector("button[type='button']");
+            const resultParagraph = document.querySelector("p.invisible");
+            const taxAmountSpan = resultParagraph.querySelector('span.text-xl');
+
+            calculateButton.addEventListener('click', () => {
+                const income = parseFloat(priceInput.value) || 0;
+                const isSenior = seniorCheckbox.checked;
+                const totalTax = calculateTax(income, isSenior);
+
+                taxAmountSpan.textContent = totalTax.toFixed(2);
+                resultParagraph.classList.remove('invisible');
+            });
+        });
+    </script>
+</body>
+
+</html>
